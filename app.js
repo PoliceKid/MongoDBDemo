@@ -17,10 +17,11 @@ var url = "mongodb+srv://hieu:aisizkh123@cluster0.18km4.mongodb.net/test";
 var bodyParser = require('body-parser');
 const { Console, debug } = require('console');
 app.use(bodyParser.urlencoded({extended:false}));
-app.use(express.static('public'))
+
+app.use(express.static('/public'))
 
 const dbHandler = require('./databaseHandler')
-
+const validation = require('./validation')
 var dsNotToDelete=['ao','quan','bep','my goi'];
 let isCanDelete = new Boolean(false);
 
@@ -88,10 +89,20 @@ app.get('/delete', async(req,res)=>{
 app.post('/doInsert',async(req,res)=>{
     const nameInput = req.body.txtName;
     const priceInput = req.body.txtPrice;
-     const imgUrlInput= req.body.imgUrl;
-    var newProduct ={name:nameInput,price:priceInput,img:imgUrlInput ,size :{width:20,length:40}}
-    await dbHandler.insertOneIntoCollection(newProduct,"Product");
-    res.render('index')
+    var check = true;
+    check &= validation.checkAlphabet(nameInput) & validation.checkPrice(priceInput);
+    if(!check){
+        err1 = "",err2 = "";
+        if(!validation.checkAlphabet(nameInput)) err1 = "Must enter characters";
+        if(! validation.checkPrice(priceInput)) err2 = "Must enter number";
+        res.render('insert',{err:{err1,err2}})
+    }
+    else{
+        var newProduct ={name:nameInput,price:priceInput,size :{width:20,length:40}}
+        await dbHandler.insertOneIntoCollection(newProduct,"Product");
+        res.render('index')
+    }
+
 })
 app.post('/login', async(req,res)=>{
     const nameInput = req.body.txtName;
@@ -103,20 +114,35 @@ app.post('/login', async(req,res)=>{
         res.render('index',{loginName:nameInput})
     }
     else{
-        res.render('index',{errorMsg:"Login failed!"})
+        res.render('login',{errorMsg:"Login failed!"})
     }
     //res.redirect('/');
 })
-app.g
+app.get('/logout' , (req,res)=>{
+   req.session.destroy((error)=>{
+       if(error){
+           return console.log(error);
+       }
+       res.render('login')
+   })
+
+})
 app.get('/register',(req,res)=>{
     res.render('register')
 })
 app.post('/doRegister', async(req,res)=>{
     const nameInput = req.body.txtName;
     const passwordInput= req.body.txtPassword;
-    const newUser = {username:nameInput,password:passwordInput};
+    const phoneInput= req.body.txtPhone;
+    const newUser = {username:nameInput,password:passwordInput,phone:phoneInput};
     await dbHandler.insertOneIntoCollection(newUser,"Users");
-    res.redirect('/');
+
+    var userName ='Not logged In';
+    req.session.username = nameInput;
+    if(req.session.username){
+        userName = req.session.username;
+    }
+    res.render('index',{loginName:userName})
 })
 app.get('/insert',(req,res)=>{
     res.render('insert')
@@ -125,9 +151,15 @@ app.get('/',(req,res)=>{
     var userName ='Not logged In';
     if(req.session.username){
         userName = req.session.username;
+        res.render('index',{loginName:userName})
     }
+    else{
     res.render('login',{loginName:userName})
+    }
 })
+
+app.use(express.static(__dirname + "/public"));
+
 var PORT =process.env.PORT||5000;
 app.listen(PORT);
 console.log("Server is running at : "+PORT);
