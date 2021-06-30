@@ -105,7 +105,7 @@ app.post('/login', async(req,res)=>{
     else{
         res.render('index',{errorMsg:"Login failed!"})
     }
-    res.redirect('/');
+    //res.redirect('/');
 })
 app.g
 app.get('/register',(req,res)=>{
@@ -126,7 +126,7 @@ app.get('/',(req,res)=>{
     if(req.session.username){
         userName = req.session.username;
     }
-    res.render('index',{loginName:userName})
+    res.render('login',{loginName:userName})
 })
 var PORT =process.env.PORT||5000;
 app.listen(PORT);
