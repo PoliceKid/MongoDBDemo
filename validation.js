@@ -19,6 +19,12 @@ function checkPhone(value){
 }
 function checkPrice(value){
     let regex = /^[0-9]+$/;
-    return regex.test(value) && value!=0;
+    return regex.test(value) && value>50;
 }
-module.exports = {checkEmpty,checkAlphabet,checkLength,checkPhone,checkPrice}
+function checkPosition(value, position){
+    let regex= /^(?=.*\d)[^!<>?=+@{}_$%]+$/;
+   return regex.test(value) && value.includes(position);
+}
+
+module.exports = {checkEmpty,checkAlphabet,checkLength,checkPhone,
+    checkPrice, checkPosition}

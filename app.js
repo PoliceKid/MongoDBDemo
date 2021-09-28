@@ -35,6 +35,7 @@ app.get('/view',async(req,res)=>{
     res.render('allProduct',{model:results,username:userName})
 
 })
+
 app.post('/search',async(req,res)=>{
     const searchText=req.body.txtName;
     var results= await dbHandler.searchProduct(searchText,"Product");
@@ -52,8 +53,13 @@ app.post('/update',async(req,res)=>{
     const id= req.body.id;
     const nameInput = req.body.txtName;
     const priceInput = req.body.txtPrice;
+    var checkPrice = validation.checkPrice(priceInput);
+    if(!checkPrice){
+        error="Price must be grater than 50";
+        res.render('edit',{errorPrice:error})
+    }
     const newValues =  {$set:{name:nameInput, price: priceInput}};
-
+   
     var ObjectID = require('mongodb').ObjectID;
     const condition = {"_id":ObjectID(id)};
     await dbHandler.UpdateOne(condition,newValues,"Product");
@@ -151,11 +157,21 @@ app.get('/',(req,res)=>{
     var userName ='Not logged In';
     if(req.session.username){
         userName = req.session.username;
-        res.render('index',{loginName:userName})
+      
+        if(validation.checkPosition(userName,'@admin')){
+           positionName='admin';
+        }
+        if(validation.checkPosition(userName,'@stuff')){
+            positionName='stuff';
+        }
+        if(validation.checkPosition(userName,'@trainer')||validation.checkPosition(userName,'@trainee')){
+            positionName='trainer';
+        }
+        res.render('index',{loginName:userName,position:positionName})
     }
     else{
-    res.render('login',{loginName:userName})
-    }
+        res.render('login',{loginName:userName})
+        }
 })
 
 app.use(express.static(__dirname + "/public"));

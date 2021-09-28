@@ -4,10 +4,11 @@ const dbName="PoliceKidDB";
 
 async function searchProduct(condition,collectionName){
     var dbo = await getDbo();
-    const searchCondition = new RegExp(condition,'i')
-    var results= await dbo.collection(collectionName).find({name:searchCondition}).toArray();
+  
+    var results= await dbo.collection(collectionName).find({price: {$gt:condition}}).toArray();
     return results;
 }
+
 async function insertOneIntoCollection(documentToInsert,collectionName){
     const dbo = await getDbo();
     await dbo.collection(collectionName).insertOne(documentToInsert);

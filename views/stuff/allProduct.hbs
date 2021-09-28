@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <title>All Products</title>
+</head>
+
+<body>
+  <form action="/search" method="post">
+    <input type="text" name="txtName">
+    <input type="submit" value="Search">
+  </form>
+  <h2>All product of {{username}} </h2>
+  <table class="table table-hover" width="80%">
+    <thead>
+
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      {{#each model}}
+      <tr>
+        <td>{{_id}}</td>
+        <td>{{name}}</td>
+        <td><img src="{{imgUrl}}" alt=""></td>
+        <td>{{price}}</td>
+        <td><a href="/edit?id={{_id}}">Edit</a></td>
+        <td><a href="/delete?id={{_id}}" onclick="return confirm('Are You sure')">Delete</a>
+          {{!-- <input type="hidden" name="txtName" id="" value="{{product.name}}"> --}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <a href="/">Go Home</a>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
