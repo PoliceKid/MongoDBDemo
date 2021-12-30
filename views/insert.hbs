@@ -1,18 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Product</title>
-</head>
+
+{{> head}}
+
 <body>
-    <form action="/doInsert" method="post">
-        Name <input type="text" name="txtName"> <span style="color: red;">{{saleError}}</span>
-        <br>
-        Price <input type="text" name="txtPrice"><span style="color: red;">{{err.err2}}</span> 
-        <br> 
-        <input type="submit" value="Insert">
-    </form>
+    <div class="app">
+        {{> header}}
+      
+        <!-- Navbar -->
+        <div class="container mt-5 py-5 h-100">
+            <h4 class="titile mb-4">New product</h4>
+            <form action="/doInsert" method="post" class="form" enctype="multipart/form-data">
+       
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="profile-container">
+                        <div class="card">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <div class="flex-shrink-0">
+                                    
+                                        <label class="form-label" for="image">Upload image</label>
+                                        <input type="file" name="image" value="" class="form-control text-14">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <span>Name</span>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <input name="txtName"  type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <span>Price</span>
+                                </div>
+                                <div class="col-sm-9">
+                                     <div class="form-group">
+                                   <input name="txtPrice"  type="text" class="form-control" >
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="block-center block-right">
+                                
+                                    <button type="submit" class="pl-4 pr-4 btn btn-dark">Save</button>
+                              </form>
+                                      
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <hr>
+                <table width="100%" style="border: 1px solid transparent;">
+                    <tbody>
+                        <tr>
+                            <td align="center">
+                                <strong>For more information or any queries, please
+                                    contact:</strong>
+                                <br>
+                                Academic Affairs Department: Tel: <strong>024.730
+                                    66788</strong>
+                                (ext 2), Email: <strong>acad.gre.hn@fe.edu.vn</strong>
+                                <br>
+                                Student Affairs Department: Tel: <strong>024.730
+                                    66788</strong>
+                                (ext 1), Email: <strong>sro.gre.hn@fe.edu.vn</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        {{!-- footer --}}
+        {{> footer }}
+    </div>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 </body>
+
 </html>

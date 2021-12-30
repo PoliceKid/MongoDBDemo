@@ -28,7 +28,7 @@ async function UpdateOne(condition,newValues,collectionName){
 }
 async function CheckUser(username,password,collectionName){
     const dbo = await getDbo();
-    results = dbo.collection(collectionName).findOne({$and:[{username:username},{password:password}]});
+   var results = dbo.collection(collectionName).findOne({$and:[{username:username},{password:password}]});
     if(results!=null){
         return true;
     }

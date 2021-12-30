@@ -1,52 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-  <title>All Products</title>
-</head>
+{{> head}}
 
 <body>
-  <form action="/search" method="post">
-    <input type="text" name="txtName">
-    <input type="submit" value="Search">
-  </form>
-  <h2>All product of {{username}} </h2>
-  <table class="table table-hover" width="80%">
-    <thead>
+  <div class="app">
+    {{> header}}
+    <div class="container">
+      <div class="grid">
+        <div class="row">
+          <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand">All Products</a>
 
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Price</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
+              <form class="d-flex input-group w-auto" action="/search" method="post">
+                <input type="search" name="txtName" class="form-control rounded" placeholder="Search FullName"
+                  aria-label="Search" aria-describedby="search-addon" />
+                <button class="input-group-text border-0" type="submit" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </button>
+              </form>
+            </div>
+          </nav>
+          <div class="e-panel card" style="background-color: #f5f5f5">
+            <div class="card-body">
+              <div class="card-title">
+              </div>
+              <div class="e-table">
+                <div class="table-responsive table-lg mt-3">
+                  <table class="table table-bordered">
+                    <thead style="text-align: center;">
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                    
+                      <tr>
+                      
+                          {{#each model}}
+                        <td class="text-nowrap align-middle">{{_id}}</td>
+                        <td class="text-nowrap align-middle">{{name}}</td>
+                        <td class="text-nowrap align-middle"> 
+                          <img src="{{./image}}" alt="" width="100px" height="100px"> </td>
+                        <td class="text-nowrap align-middle">{{price}}</td>
+                           <td class="text-center align-middle">
+                                                    <div class="btn-group align-top">
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-success navbar-nav"
+                                                            data-mdb-toggle="modal"
+                                                            data-mdb-target="#exampleModal{{_id}}">
+                                                           <i class="fas fa-user-edit"></i>
+                                                        </button>
+                                                        <!-- Modal -->
 
-    </thead>
-    <tbody>
-      {{#each model}}
-      <tr>
-        <td>{{_id}}</td>
-        <td>{{name}}</td>
-        <td><img src="{{imgUrl}}" alt=""></td>
-        <td>{{price}}</td>
-        <td><a href="/edit?id={{_id}}">Edit</a></td>
-        <td><a href="/delete?id={{_id}}" onclick="return confirm('Are You sure')">Delete</a>
-          {{!-- <input type="hidden" name="txtName" id="" value="{{product.name}}"> --}}
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <a href="/">Go Home</a>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                                                        <div class="modal fade" id="exampleModal{{_id}}" tabindex="-1"
+                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                                            EDIT CATEGORY</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-mdb-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">.
+                                                                        <form action="/update?id={{this._id}}"
+                                                                            method="post" class="form" enctype="multipart/form-data">
+                                                                            <input name="id" value="{{this._id}}"
+                                                                                type="hidden">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Name
+                                                                                </label>
+                                                                                <input type="text" name="txtName"
+                                                                                    value="{{this.name}}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Price
+                                                                                </label>
+                                                                                <input type="text" name="txtPrice"
+                                                                                value="{{this.price}}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Image
+                                                                                </label>
+                                                                                <input type="file" name="image"
+                                                                                >
+                                                                        
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <input type="submit"
+                                                                                    class="btn btn-primary form-submit"
+                                                                                    value="Update">
+                                                                                <button type="button"
+                                                                                    class="btn btn-danger"
+                                                                                    data-mdb-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{!-- END modal --}}
+                                                    </div>
+                                                </td>
+                        <td class="text-center align-middle">
+                          <div class="btn-group align-top">
+                            <a href="/delete?id={{_id}}" class="btn btn-danger"
+                              onclick="return confirm('Are you sure')">
+                              <span class="glyphicon glyphicon-remove"></span>
+                              <i class="fas fa-trash-alt"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 </body>
 
 </html>

@@ -1,26 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/CSS/myStyle.css">
-    <title>Index page</title>
-</head>
+
+{{> head}}
+
 <body>
-    <h2> Hello {{loginName}}</h2>
-    {{!-- <form action="/login" method="post">
-        UserName <input type="text" name="txtName">
-       <br>
-       Password <input type="password" name="txtPassword">
-       <br>
-       <input type="submit" value="Login">
-    </form> --}}
+	<div class="app">
+		<header>
+			<!-- Navbar -->
+			<nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
+				<div class="container-fluid">
+					<a href="#" class="navbar-brand">FPT.co</a>
+					<button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+						data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<i class="fas fa-bars"></i>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarExample01">
+						<div class="mx-auto"></div>
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item active">
+								<a class="nav-link text-white" aria-current="page" href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="/view">All products</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="/insert">New product</a>
+							</li>
+						
+						</ul>
+                          <!-- Avatar -->
+                <a class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button"
+                    data-mdb-toggle="dropdown" aria-expanded="false">
+                    <img src="./images/userDefault.png" class="rounded-circle" height="25" alt="Error!" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="/">My profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    </li>
+                </ul>
+					</div>
+				</div>
+			</nav>
+			<!-- Navbar -->
+
+			{{!-- carousel --}}
+            {{> carousel}}  
+		</header>
+
+		{{!-- footer --}}
+		{{> footer }}
+	</div>
+
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		var nav = document.querySelector('nav');
+
+		window.addEventListener('scroll', function () {
+			if (window.pageYOffset > 100) {
+				nav.classList.add('bg-dark', 'shadow');
+			} else {
+				nav.classList.remove('bg-dark', 'shadow');
+			}
+		});
+	</script>
+	<!-- MDB -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+</body>
+
+</html>
+
+    {{!-- <h2> Hello {{loginName}}</h2>
+   
     
     <a href="/insert"> New product</a>
     <a href="/view">All products</a>
     <a href="/logout">Log out</a>
-    {{!-- <a href="/register"> Register</a> --}}
-</body>
-
-</html>
+    <a href="/register"> Register</a> --}}
